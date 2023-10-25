@@ -9,7 +9,7 @@ from src.parsing_utils import split_expression
 class TestParsing(ut.TestCase):
     def test_split_expression(self):
         self.assertEqual(split_expression(
-            "5 * X^0 + 4 * X^1 - 9.3 * X^2 = 1 * X^0"), ("5*X^0+4*X^1-9.3*X^2", "1*X^0"))
+            "5 * X^0 + 4 * X^1 - 9.3 * X^2 = 1 * X^0"), ("5*X^0+4*X^1-9 .3*X^2", "1*X^0"))
         self.assertEqual(split_expression(
             "5 * X^0 + 4 * X^1 = 4 * X^0"), ("5*X^0+4*X^1", "4*X^0"))
 

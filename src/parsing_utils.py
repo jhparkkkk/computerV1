@@ -24,7 +24,7 @@ return left-sided expression and right-sided expression. The expressed get trimm
     return splitted[0], splitted[1]
 
 
-def get_coefficients_list(expression: str) -> list[float]:
+def create_terms_list(expression: str) -> list[str]:
     # split
     split_pattern = r'(\+|\-)'
     terms = re.split(split_pattern, expression)
@@ -32,6 +32,7 @@ def get_coefficients_list(expression: str) -> list[float]:
     if terms[0] and terms[0][0].isdigit():
         terms[0] = '+' + terms[0]
         terms_with_operator.append(terms[0])
+    
     operator = ''
     # append positive or negative sign to each coefficient
     for term in terms:
@@ -40,16 +41,39 @@ def get_coefficients_list(expression: str) -> list[float]:
                 terms_with_operator.append(operator + term)
         if term and term == '+' or term == '-':
             operator = term
-    coefficients_list = []
+    return terms_with_operator
 
-    for term in terms_with_operator:
+def get_degree(left_terms: list[str], right_terms: list[str]) -> int:
+    left_degree = 0
+    for term in left_terms:
+        exponent = int(term[-1:])
+        if exponent > left_degree:
+            left_degree = exponent
+    right_degree = 0
+    for term in right_terms:
+        exponent = int(term[-1:])
+        if exponent > right_degree:
+            right_degree = exponent
+    if left_degree > right_degree:
+        return left_degree
+    return right_degree
+
+def get_coefficients_list(terms: list[str], degree: int) -> list[float]:
+    print('terms:', terms)
+    coefficients_list = [[] for i in range(degree + 1)]
+    # coefficients_list = []
+    
+    for term in terms:
         coefficient_end = term.find('*')
-        value = float(term[0:coefficient_end])
-        degree = int(term[-1:])
-        if degree >= len(coefficients_list):
-            coefficients_list.append([value])
+        if coefficient_end == -1 and term == '+0':
+            value = 0
+        # print('term', term, 'coefficient end', coefficient_end)
         else:
-            coefficients_list[degree].extend([value])
+            value = float(term[0:coefficient_end])
+        degree = int(term[-1:])
+        coefficients_list[degree].extend([value])
+
+    # print('coefficient list:', coefficients_list)
     return coefficients_list
 
 
@@ -107,18 +131,3 @@ def reduce_expression(left: list[float], right: list[float]) -> list[float]:
     return left_reduced
 
 
-def display_reduced_expression(expression: str):
-    to_display = ""
-    index = -1
-    for degree in expression:
-        index += 1
-        for value in degree:
-            print(f"{index} {value}")
-            # if value > 0:
-            #     operator = '+'
-            # else:
-            #     operator = '-'
-            to_display += str(value) + ' * X^' + str(index) + ' '
-
-    print(to_display)
-# Reduced form: 4 * X^0 + 4 * X^1 - 9.3 * X^2 = 0

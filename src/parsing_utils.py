@@ -1,4 +1,5 @@
 import re
+from colorama import Fore
 
 
 def split_expression(expression: str) -> str:
@@ -125,7 +126,7 @@ if coefficient * X ^ 2 then coefficient is appended in coefficient[2]
     for term in terms:
         coefficient_end = term.find('*')
         if coefficient_end == -1 and term == '+0':
-            value = 0
+            value = 0.0
         # print('term', term, 'coefficient end', coefficient_end)
         else:
             value = float(term[0:coefficient_end])
@@ -150,7 +151,7 @@ coefficients needs to be calculated in order to reduce the expression
     res = 0
     index = -1
     for degree in expression:
-        res = 0
+        res = 0.0
         index += 1
         for value in degree:
             res += value
@@ -213,10 +214,6 @@ are calculated. Then the riht-sided coefficient are first negated and then added
     left_reduced = calculate_to_reduce(left)
     right_reduced = calculate_to_reduce(right)
     negate_expression(right_reduced)
-    print('negate right expression:', right_reduced)
-    print(f"left reduced: {left_reduced} right reduced: {right_reduced}")
     create_equation(left_reduced, right_reduced)
-    print(f"equation: {left_reduced}")
     left_reduced = calculate_to_reduce(left_reduced)
-    print(f"reduced equation: {left_reduced}")
     return left_reduced

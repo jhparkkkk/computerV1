@@ -4,7 +4,7 @@ import sys
 import os
 
 from src.parsing_utils import *
-from src.solve import solve_quadratic_equation
+from src.solve import solve_quadratic_equation, solve_linear_equation, solve_constant_equation
 
 
 class TestParsing(ut.TestCase):
@@ -51,6 +51,22 @@ class TestSolve(ut.TestCase):
             [[7.0], [-2.0], [3.0]]), "Discriminant is strictly negative, the two solutions are:\n0.333333 + 1.490712i\n0.333333 - 1.490712i")
         self.assertEqual(solve_quadratic_equation([[4.0], [
                          4.0], [-9.3]]), "Discriminant is strictly positive, the two solutions are:\n0.905239\n-0.475131")
+
+    def test_linear_equation(self):
+        self.assertEqual(solve_linear_equation(
+            [[1.0], [4.0]]), "The solution is:\n-0.25")
+
+    def test_constant_equation(self):
+        self.assertEqual(solve_constant_equation(
+            [[42.0]]), "There is no real X that can satisfy this equation")
+        self.assertEqual(solve_constant_equation(
+            [[0.0]]), "The equation is true for any real numbers X")
+
+    def test_identity(self):
+        self.assertEqual(solve_linear_equation(
+            [[0.0], [0.0]]), "The equation is true for any real numbers X")
+        self.assertEqual(solve_quadratic_equation(
+            [[0.0], [0.0], [0.0]]), "The equation is true for any real numbers X")
 
 
 if __name__ == "__main__":

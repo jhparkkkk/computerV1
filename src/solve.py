@@ -1,3 +1,6 @@
+from colorama import Fore
+import display as dp
+
 
 def solve_constant_equation(equation: list[float]) -> str:
     """verify if constant value is equal to zero
@@ -25,9 +28,12 @@ def solve_linear_equation(equation: list[float]) -> str:
     try:
         a = equation[1][0]
         b = equation[0][0]
+        if a == 0.0 and b == 0.0:
+            return "The equation is true for any real numbers X"
         x = -b / a
         return "The solution is:\n" + str(x)
-    except Exception:
+    except Exception as error:
+        print(error)
         return "There is no solution"
 
 
@@ -55,8 +61,10 @@ D=b^2 −4ac
     Returns:
         float: discriminant
     """
+
+    print(f"\ndiscriminant",  "=",
+          f"{b}²",  "- 4 * ",  f"{a}",  "*",  f"{c}")
     res = (b ** 2) - (4 * a * c)
-    print('discriminant', res)
     return res
 
 
@@ -77,8 +85,8 @@ def find_two_real_solutions(a: float, b: float, discriminant: float):
         x1 = (-b - ft_sqrt(discriminant)) / (2 * a)
         x2 = (-b + ft_sqrt(discriminant)) / (2 * a)
         return x1, x2
-    except Exception:
-        return "There is no solution"
+    except Exception as error:
+        raise (error)
 
 
 def find_one_real_solution(a: float, b: float):
@@ -95,8 +103,8 @@ has one real solution(repeated root)
     try:
         x = (-b) / (2*a)
         return x
-    except Exception:
-        return "There is no solution"
+    except Exception as error:
+        raise (error)
 
 
 def perfect_square(value: int) -> list[int]:
@@ -166,8 +174,8 @@ but instead has two complex (or imaginary) solutions.
         x1 = f"{real_number:.6f} + {imaginary_number:.6f}i"
         x2 = f"{real_number:.6f} - {imaginary_number:.6f}i"
         return x1, x2
-    except Exception:
-        return "There is no solution"
+    except Exception as error:
+        raise (error)
 
 
 def solve_quadratic_equation(equation: list[float]):
@@ -183,22 +191,24 @@ two complex (or imaginary) solutions.
     Returns:
         str: solution
     """
-    print(equation)
     a = equation[2][0]
     b = equation[1][0]
     c = equation[0][0]
-    print(f"a: {a}, b: {b}, c:{c}")
+    if a == 0.0 and b == 0.0 and c == 0.0:
+        return "The equation is true for any real numbers X"
+    dp.display_coefficients(a, b, c, None)
     discriminant = find_discriminant(a, b, c)
+    dp.display_coefficients(a, b, c, discriminant)
     if discriminant > 0:
         x1, x2 = find_two_real_solutions(a, b, discriminant)
-        return f"Discriminant is strictly positive, the two solutions are:\n{x1:.6f}\n{x2:.6f}"
+        return f"\nDiscriminant is strictly positive, the two solutions are:\n{x1:.6f}\n{x2:.6f}"
     elif discriminant == 0:
         x = find_one_real_solution(a, b)
-        return f"Discriminant is equal to zero, the solution is:\n{x:.6f}"
+        return f"\nDiscriminant is equal to zero, the solution is:\n{x:.6f}"
 
     elif discriminant < 0:
         x1, x2 = find_two_complex_solutions(a, b, discriminant)
-        return f"Discriminant is strictly negative, the two solutions are:\n{x1}\n{x2}"
+        return f"\nDiscriminant is strictly negative, the two solutions are:\n{x1}\n{x2}"
 
 
 def solve(equation: list[float], degree: int):

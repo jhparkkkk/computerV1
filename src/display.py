@@ -1,10 +1,13 @@
+from colorama import Fore
+
+
 def display_reduced_expression(expression: list[float]):
     """display reduced expression
 
     Args:
         expression (list[float]): coefficients values
     """
-    to_display = "Reduced form: "
+    to_display = "\nReduced form: "
     index = -1
     for degree in expression:
         index += 1
@@ -29,4 +32,16 @@ def display_polynomial_degree(degree: int):
     Args:
         degree (int): polynomial degree
     """
-    print("Polynomial degree: " + str(degree))
+    print("\nPolynomial degree: " + str(degree))
+
+
+def display_left_and_right(left: list[str | float], right: list[str | float]):
+    print(f"\nleft: {left}\nright: {right}")
+
+
+def display_coefficients(a: float, b: float, c: float, discriminant: float | None):
+    if discriminant == None:
+        print(f"\na = {a} ",  f"b = {b} ", f"c = {c} ")
+    else:
+        print(f"\na = {a} ",  f"b = {b} ",
+              f"c = {c} ",  f"discriminant:{discriminant}")

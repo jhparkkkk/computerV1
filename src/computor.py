@@ -8,19 +8,13 @@ import solve
 def main():
     try:
         assert len(sys.argv) == 2, 'one argument required'
-        print(
-            Fore.BLUE, f"✏️  initial expression: {sys.argv[1]}\n", Fore.RESET)
+        print(f"initial expression: {sys.argv[1]}")
         left_expression, right_expression = parser.split_expression(
             sys.argv[1])
-        print(Fore.CYAN, f"   left expression:|{left_expression}|",
-              Fore.YELLOW, f"right expression: {right_expression}")
-
-        # terms list
+        display.display_left_and_right(left_expression, right_expression)
         left_terms = parser.create_terms_list(left_expression)
         right_terms = parser.create_terms_list(right_expression)
-        print(Fore.CYAN, f"   left terms:|{left_terms}|",
-              Fore.YELLOW, f"right terms: {right_terms}")
-
+        display.display_left_and_right(left_terms, right_terms)
         # check pattern
         if parser.check_term_pattern(left_terms) == False or parser.check_term_pattern(right_terms) == False:
             raise Exception(
@@ -28,19 +22,17 @@ def main():
 
         # degree
         degree = parser.get_degree(left_terms, right_terms)
-        print('degree is', degree)
 
-        left_coefficient_list = parser.get_coefficients_list(
+        left_coefficients = parser.get_coefficients_list(
             left_terms, degree)
-        right_coefficient_list = parser.get_coefficients_list(
+        right_coefficients = parser.get_coefficients_list(
             right_terms, degree)
-        print(Fore.CYAN, f"   left coefficient: {left_coefficient_list}",
-              Fore.YELLOW, f"right list: {right_coefficient_list}", Fore.RESET)
+        display.display_left_and_right(
+            left_coefficients, right_coefficients)
 
         # reduce expression
         reduced_expression = parser.reduce_expression(
-            left_coefficient_list, right_coefficient_list)
-        print(f"Reduced form: {reduced_expression}")
+            left_coefficients, right_coefficients)
         # display
         display.display_reduced_expression(reduced_expression)
         display.display_polynomial_degree(degree)

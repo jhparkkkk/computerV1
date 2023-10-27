@@ -16,7 +16,8 @@ def main():
         right_terms = parser.create_terms_list(right_expression)
         display.display_left_and_right(left_terms, right_terms)
         # check pattern
-        if parser.check_term_pattern(left_terms) == False or parser.check_term_pattern(right_terms) == False:
+        if parser.check_term_pattern(left_terms) is False \
+                or parser.check_term_pattern(right_terms) is False:
             raise Exception(
                 'invalid format: expression must be digits|*|X|^|digits')
 

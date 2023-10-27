@@ -1,4 +1,3 @@
-from colorama import Fore
 import display as dp
 
 
@@ -12,6 +11,7 @@ def solve_constant_equation(equation: list[float]) -> str:
         str: result
     """
     if equation[0][0] == 0.0:
+        print(f"a = {equation[0][0]}")
         return "The equation is true for any real numbers X"
     return "There is no real X that can satisfy this equation"
 
@@ -31,10 +31,12 @@ def solve_linear_equation(equation: list[float]) -> str:
         if a == 0.0 and b == 0.0:
             return "The equation is true for any real numbers X"
         x = -b / a
-        return "The solution is:\n" + str(x)
+
+        print(f"\na = {a} b = {b} x = ?\nx = -b / a\nx = {-b} / {a}\nx = {x}")
+        return "\nThe solution is:\n" + str(x)
     except Exception as error:
         print(error)
-        return "There is no solution"
+        return "\nThere is no solution"
 
 
 def ft_sqrt(value: float):
@@ -61,15 +63,14 @@ D=b^2 −4ac
     Returns:
         float: discriminant
     """
-
-    print(f"\ndiscriminant",  "=",
-          f"{b}²",  "- 4 * ",  f"{a}",  "*",  f"{c}")
+    dp.display_find_discriminant(a, b, c)
     res = (b ** 2) - (4 * a * c)
     return res
 
 
 def find_two_real_solutions(a: float, b: float, discriminant: float):
-    """if the discriminant is positive then there are 2 solutions with real numbers
+    """if the discriminant is positive
+ then there are 2 solutions with real numbers
 
     Args:
         a (float): coefficient a
@@ -84,6 +85,7 @@ def find_two_real_solutions(a: float, b: float, discriminant: float):
     try:
         x1 = (-b - ft_sqrt(discriminant)) / (2 * a)
         x2 = (-b + ft_sqrt(discriminant)) / (2 * a)
+        dp.display_two_real_solutions(a, b, discriminant)
         return x1, x2
     except Exception as error:
         raise (error)
@@ -128,13 +130,14 @@ def perfect_square(value: int) -> list[int]:
 
 
 def reduce_square(value):
-    """factorize square value.  First search for perfect square that are below n 
+    """factorize square value. First search for perfect square that are below n
 
     Args:
         value (): _description_
 
     Returns:
-        coefficient, radicant (int): coeffcient and radicant of the reduced square
+        coefficient, radicant (int): coeffcient and radicant
+of the reduced square
     """
     factors = []
     perfect_squares = perfect_square(value)[::-1]
@@ -144,13 +147,11 @@ def reduce_square(value):
             break
     # Square root is irreducible
     if len(factors) == 0:
-        print('\u221A', value)
         return 1, value
     # return reduced square root
     else:
         coefficient = int(ft_sqrt(factors[0]))
-        radicant = int(value/max(factors))
-        print(coefficient, '\u221A', radicant)
+        radicant = int(value/factors[0])
         return coefficient, radicant
 
 
@@ -161,16 +162,21 @@ but instead has two complex (or imaginary) solutions.
     Args:
         a (float): coefficient a
         b (float): coefficient b
-        coefficient (int): 
-        radicant (int): 
+        coefficient (int): coefficient of the discriminant
+        radicant (int): radicant of the discriminant
 
     Returns:
         _type_: _description_
     """
     try:
+        dp.display_two_complex_solution_real_number(a, b)
         real_number = (-b/(2*a))
         coefficient, radicant = reduce_square(discriminant * -1)
         imaginary_number = ((coefficient*(ft_sqrt(radicant))) / (2*a))
+        dp.display_two_complex_solution_imaginary_number(
+            a, b, discriminant, coefficient, radicant,
+            real_number, imaginary_number)
+
         x1 = f"{real_number:.6f} + {imaginary_number:.6f}i"
         x2 = f"{real_number:.6f} - {imaginary_number:.6f}i"
         return x1, x2
@@ -201,14 +207,16 @@ two complex (or imaginary) solutions.
     dp.display_coefficients(a, b, c, discriminant)
     if discriminant > 0:
         x1, x2 = find_two_real_solutions(a, b, discriminant)
-        return f"\nDiscriminant is strictly positive, the two solutions are:\n{x1:.6f}\n{x2:.6f}"
+        return f"\nDiscriminant is strictly positive, \
+the two solutions are:\n{x1:.6f}\n{x2:.6f}"
     elif discriminant == 0:
         x = find_one_real_solution(a, b)
         return f"\nDiscriminant is equal to zero, the solution is:\n{x:.6f}"
 
     elif discriminant < 0:
         x1, x2 = find_two_complex_solutions(a, b, discriminant)
-        return f"\nDiscriminant is strictly negative, the two solutions are:\n{x1}\n{x2}"
+        return f"\nDiscriminant is strictly negative, \
+the two solutions are:\n{x1}\n{x2}"
 
 
 def solve(equation: list[float], degree: int):
@@ -231,5 +239,6 @@ def solve(equation: list[float], degree: int):
         solution = solve_dict[degree](equation)
     else:
         raise Exception(
-            'The polynomial degree is strictly greater than 2, I can\'t solve.')
+            'The polynomial degree is strictly greater than 2, \
+I can\'t solve.')
     print(solution)

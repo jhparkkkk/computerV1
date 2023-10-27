@@ -1,4 +1,4 @@
-from colorama import Fore
+from solve import ft_sqrt
 
 
 def display_reduced_expression(expression: list[float]):
@@ -39,9 +39,57 @@ def display_left_and_right(left: list[str | float], right: list[str | float]):
     print(f"\nleft: {left}\nright: {right}")
 
 
-def display_coefficients(a: float, b: float, c: float, discriminant: float | None):
-    if discriminant == None:
-        print(f"\na = {a} ",  f"b = {b} ", f"c = {c} ")
+def display_coefficients(a: float, b: float, c: float,
+                         discriminant: float | None):
+    if discriminant is None:
+        print(f"\na = {a}, b = {b}, c = {c}, x = ?")
     else:
-        print(f"\na = {a} ",  f"b = {b} ",
-              f"c = {c} ",  f"discriminant:{discriminant}")
+        print(
+            f"\na = {a}, b = {b}, c = {c}, discriminant:{discriminant}, x = ?")
+
+
+def display_two_real_solutions(a: float, b: float, discriminant: float):
+    print("\nsearching for two real solutions x1 and x2:")
+    print("x1 = -b - discriminant² / 2 * a")
+    print(f"x1 = -({b}) - {discriminant}² / 2 * {a}")
+    print(f"x1 = {-b - ft_sqrt(discriminant)} / {2 * a}")
+    print(f"x1 = {(-b - ft_sqrt(discriminant)) / (2 * a)}")
+    print("\nx2 = -b + discriminant² / 2 * a")
+    print(f"x2 = -({b}) + {discriminant}² / 2 * {a}")
+    print(f"x2 = {-b + ft_sqrt(discriminant)} / {2 * a}")
+    print(f"x2 = {(-b + ft_sqrt(discriminant)) / (2 * a)}")
+
+
+def display_find_discriminant(a: float, b: float, c: float):
+    print("\ndiscriminant = b² - 4 * a * c")
+    print(f"discriminant = {b}² - 4 * {a} * {c}")
+    print(f"discriminant = {b ** 2} - ({4 * a * c})")
+    print(f"discriminant = {b ** 2 - 4 * a * c}")
+
+
+def display_two_complex_solution_real_number(a: float, b: float):
+    print('\nDiscriminant is negative: searching \
+for two complex solutions x1 and x2:')
+    print("real number = -b / 2 * a")
+    print(f"real number = {b * -1} / 2 * {a}")
+    print(f"real number = {b * -1} / {2 * a}")
+    print(f"real number = {(b * -1) / (2 * a)}")
+
+
+def display_two_complex_solution_imaginary_number(a: float, b: float,
+                                                  discriminant: float,
+                                                  coeff: int, radicant: int,
+                                                  real_number: float,
+                                                  imaginary_number: float):
+    print("\nimaginary number = (√discriminant / 2 * a) * i")
+    print(f"imaginary number = (√{discriminant} / 2 * {a}) * i")
+    print("\nIs the discriminant reductible?")
+    print(f"√{discriminant * -1} = {coeff}√{radicant}")
+    print(
+        f"imaginary number = ({coeff * ft_sqrt(radicant)} / {2 * a}) * i")
+    print(
+        f"imaginary number = ({(coeff * ft_sqrt(radicant)) / (2 * a)}) * i")
+    print("\nx1 = real number + imaginary number")
+    print(f"x1 = {real_number:.6f} + {imaginary_number:.6f}i")
+    print("\nx2 = real number - imaginary number")
+    print(f"x2 = {real_number:.6f} - {imaginary_number:.6f}i")

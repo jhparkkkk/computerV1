@@ -1,10 +1,10 @@
 import re
-from colorama import Fore
 
 
 def split_expression(expression: str) -> str:
     """split the initial expression using '=' sign as a delimiter to
-return left-sided expression and right-sided expression. The expression get trimmed
+return left-sided expression and right-sided expression.
+The expression get trimmed
     Args:
         expression (str): expression describing a polynomial equation
 
@@ -80,13 +80,13 @@ def check_term_pattern(terms: list[str]) -> bool:
     pattern = r"^[+-][0-9].*\*X\^[0-9]+$"
 
     for term in terms:
-        if re.match(pattern, term) == None:
+        if re.match(pattern, term) is None:
             return False
     return True
 
 
 def get_degree(left_terms: list[str], right_terms: list[str]) -> int:
-    """returns degree of the equation by searching the highest exponent 
+    """returns degree of the equation by searching the highest exponent
 
     Args:
         left_terms (list[str]): left-sided expression
@@ -116,7 +116,7 @@ index of list is related to coefficient's exponent value.
 if coefficient * X ^ 2 then coefficient is appended in coefficient[2]
     Args:
         terms (list[str]): where to extract coefficients
-        degree (int): to create a list of degree + 1 size 
+        degree (int): to create a list of degree + 1 size
 
     Returns:
         list[float]: list of coefficient
@@ -138,8 +138,8 @@ if coefficient * X ^ 2 then coefficient is appended in coefficient[2]
 
 
 def calculate_to_reduce(expression: list[float]) -> list[float]:
-    """from coefficient list of lists, if sub-list is greater than size 1, means
-coefficients needs to be calculated in order to reduce the expression
+    """from coefficient list of lists, if sub-list is greater than size 1,
+means coefficients needs to be calculated in order to reduce the expression
 
     Args:
         expression (list): list of list of coefficients
@@ -194,8 +194,10 @@ equation = 0
 
 
 def reduce_expression(left: list[float], right: list[float]) -> list[float]:
-    """reduce expression to solve equation. Both side, coefficients with the same exponent value
-are calculated. Then the riht-sided coefficient are first negated and then added to the left-sided 
+    """reduce expression to solve equation. Both side, coefficients
+with the same exponent value are calculated.
+Then the riht-sided coefficient are first negated
+and then added to the left-sided
 
     Args:
         left (list[float]): left-sided equation
@@ -204,13 +206,6 @@ are calculated. Then the riht-sided coefficient are first negated and then added
     Returns:
         list[float]: reduced expression
     """
-    if len(left) > len(right):
-        size = len(left)
-    else:
-        size = len(right)
-    reduced_list = [[] for x in range(size)]
-    res = 0
-    index = -1
     left_reduced = calculate_to_reduce(left)
     right_reduced = calculate_to_reduce(right)
     negate_expression(right_reduced)
